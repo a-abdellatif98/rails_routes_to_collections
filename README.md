@@ -16,6 +16,8 @@ A Ruby gem that generates API collections from Rails routes that can be imported
 
 ## Installation
 
+### Method 1: From RubyGems (When Published)
+
 Add this line to your Rails application's Gemfile:
 
 ```ruby
@@ -28,10 +30,39 @@ And then execute:
 $ bundle install
 ```
 
-Or install it globally:
+### Method 2: Local Installation (Recommended for Testing)
+
+1. **Clone or copy the gem to your project:**
+```bash
+# From the gem directory, run the installer
+ruby install.rb /path/to/your/rails/project
+
+# Or manually copy
+cp -r path/to/rails-routes-to-collections /your/rails/project/local_gems/
+```
+
+2. **Add to your Gemfile:**
+```ruby
+gem 'rails_routes_to_collections', path: './local_gems/rails_routes_to_collections'
+```
+
+3. **Install:**
+```bash
+bundle install
+```
+
+### Method 3: Quick Setup Script
+
+Run this one-liner in your Rails project:
 
 ```bash
-$ gem install rails_routes_to_collections
+curl -sSL https://raw.githubusercontent.com/your-repo/rails-routes-to-collections/main/install.rb | ruby
+```
+
+### Method 4: Global Installation
+
+```bash
+gem install rails_routes_to_collections
 ```
 
 ## Usage

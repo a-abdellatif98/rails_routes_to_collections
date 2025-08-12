@@ -2,8 +2,8 @@
 
 module RailsRoutesToCollections
   class RouteExtractor
-    def initialize(app = Rails.application)
-      @app = app
+    def initialize(app = nil)
+      @app = app || detect_rails_app
     end
 
     def extract_routes
@@ -36,6 +36,14 @@ module RailsRoutesToCollections
     end
 
     private
+
+    def detect_rails_app
+      if defined?(Rails) && Rails.respond_to?(:application) && Rails.application
+        Rails.application
+      else
+        raise RailsRoutesToCollections::Error, "Rails application not detected. Please run this command from a Rails application directory."
+      end
+    end
 
     def valid_route?(route)
       # Filter out internal Rails routes and invalid routes

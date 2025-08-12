@@ -20,15 +20,16 @@ module RailsRoutesToCollections
 
     def run
       parse_options
-      
-      unless defined?(Rails)
-        puts "Error: Rails not detected. Please run this command from a Rails application directory."
-        exit 1
-      end
-
+      load_rails_environment
       generate_collection
+    rescue RailsRoutesToCollections::Error => e
+      puts "Error: #{e.message}"
+      puts "\nMake sure you're running this command from a Rails application directory."
+      exit 1
     rescue StandardError => e
       puts "Error: #{e.message}"
+      puts "Backtrace:"
+      puts e.backtrace.first(5).join("\n") if @options[:verbose]
       exit 1
     end
 
@@ -67,7 +68,30 @@ module RailsRoutesToCollections
           puts RailsRoutesToCollections::VERSION
           exit
         end
+
+        opts.on("--verbose", "Show verbose output") do
+          @options[:verbose] = true
+        end
       end.parse!(@args)
+    end
+
+    def load_rails_environment
+      return if defined?(Rails) && Rails.application
+
+      # Try to load Rails environment
+      rails_env_files = ['config/environment.rb', './config/environment.rb']
+      rails_env_file = rails_env_files.find { |file| File.exist?(file) }
+
+      if rails_env_file
+        puts "Loading Rails environment..." if @options[:verbose]
+        require File.expand_path(rails_env_file)
+      else
+        raise RailsRoutesToCollections::Error, "Rails application not detected. Could not find config/environment.rb"
+      end
+
+      unless defined?(Rails) && Rails.application
+        raise RailsRoutesToCollections::Error, "Rails application failed to load properly."
+      end
     end
 
     def generate_collection
