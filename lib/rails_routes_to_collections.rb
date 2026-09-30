@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require "active_support"
+require "active_support/core_ext/object/blank"
+require "active_support/core_ext/string/inflections"
+
 require_relative "rails_routes_to_collections/version"
 require_relative "rails_routes_to_collections/route_extractor"
 require_relative "rails_routes_to_collections/postman_generator"

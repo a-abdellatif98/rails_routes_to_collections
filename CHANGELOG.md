@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-09-30
+
+### Fixed
+- Load the ActiveSupport extensions the gem uses, so it works outside a fully loaded Rails app. The spec suite passes again.
+- Ship only `lib/`, `exe/`, and the docs in the gem. Development and demo scripts are no longer packaged.
+
+### Changed
+- Depend on `railties` and `activesupport` instead of the full `rails` gem.
+- Set the real gem author and link the package to the GitHub repo.
+- Add CI that runs the specs on Ruby 3.2, 3.3, and 3.4.
+
 ## [0.2.0] - 2025-08-12
 
 ### Added
